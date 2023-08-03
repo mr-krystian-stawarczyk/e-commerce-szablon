@@ -2,12 +2,6 @@
 	box-sizing: border-box;
 	padding: 0;
 	margin: 0;
-	--bg-color: $ {
-		theme==='light'?'#fff': "#111";
-	}
-	--text-color: $ {
-		theme==='light'?'#333': "#eee";
-	}
 }
 .logo {
 	color: #000000; /* Set the text color to white */

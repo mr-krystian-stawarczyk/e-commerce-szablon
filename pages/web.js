@@ -7,9 +7,9 @@ import Web2 from "@/components/Web2";
 import Web3 from "@/components/Web3";
 import Web4 from "@/components/Web4";
 import Web5 from "@/components/Web5";
-{
-	/* 	import Web6 from "@/components/Web6";*/
-}
+
+import Web6 from "@/components/Web6";
+
 import WebPrices from "@/components/WebPrices";
 import Faq1 from "@/components/Faq1";
 
@@ -32,7 +32,7 @@ function web() {
 			<Web3 />
 			<Web4 />
 			<Web5 />
-			{/* 	<Web6 /> */}
+			<Web6 />
 			<WebPrices />
 			<Faq1 />
 		</div>

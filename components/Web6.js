@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
-import { urlFor } from "../lib/client";
-import sanityClient from "@sanity/client";
+import { urlFor, client } from "../lib/client";
 
 import { useTranslation } from "react-i18next";
 
@@ -9,12 +8,6 @@ function Web6() {
 	const { t, i18n } = useTranslation();
 
 	const [realizacje, setRealizacje] = useState([]);
-	const client = sanityClient({
-		projectId: process.env.NEXT_PUBLIC_PROJECTID,
-		dataset: "production",
-		useCdn: true,
-		apiVersion: "2023-05-09",
-	});
 
 	const sectionRef = useRef(null);
 	const [animate, setAnimate] = useState(false);
@@ -53,13 +46,13 @@ function Web6() {
 					<h1 className="my-5 text-center bold">{t("web22")}</h1>
 				</Col>
 			</Row>
+
 			<Row className="justify-content-center align-items-center text-center">
 				{realizacje.map((item) => (
 					<Col lg={6} className="mx-auto my-2" key={item._id}>
 						<Card className="bg-transparent border-0 shadow-lg">
 							<Card.Img
 								src={urlFor(item.image && item.image[0])}
-								alt={item.image && item.image[0].alt}
 								layout="fill"
 								loading="lazy"
 							/>

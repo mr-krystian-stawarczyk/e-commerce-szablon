@@ -11,6 +11,7 @@ import Header3 from "@/components/Header3";
 import Header4 from "@/components/Header4";
 import Header5 from "@/components/Header5";
 import Header6 from "@/components/Header6";
+import KomponentTestowy from "@/components/KomponentTestowy";
 
 export default function Home() {
 	const { theme } = useTheme();
@@ -27,6 +28,7 @@ export default function Home() {
 				/>
 				<meta name="robots" content="index, follow" />
 			</Head>
+			<KomponentTestowy />
 			<Header1 />
 			{/* 	<TechBar />    */}
 			<Header2 />
