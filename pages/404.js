@@ -7,7 +7,7 @@ function error() {
 	return (
 		<Container className="mt-5 pt-5">
 			<Head>
-				<title>404 Error in 41334 Nettetal | Pixel Genie Webagentur</title>
+				<title>404 Error </title>
 				<meta
 					name="description"
 					content="Leider scheint die von Ihnen angeforderte Seite nicht vorhanden zu sein. Kontaktieren Sie uns, um Hilfe zu erhalten, oder besuchen Sie unsere Startseite, um unsere Dienstleistungen zu sehen."

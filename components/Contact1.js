@@ -1,71 +1,147 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Col, Container, Row, Card, Button } from "react-bootstrap";
 import { AiOutlinePhone, AiOutlineMail } from "react-icons/ai";
 import { HiOutlineLocationMarker } from "react-icons/hi";
 import { useTranslation } from "react-i18next";
+import { client, urlFor } from "../lib/client";
 function Contact1() {
 	const { t } = useTranslation();
 
-	function handleCall() {
-		window.location.href = "tel:+49173534346";
-	}
-
-	const handleEmailClick = () => {
-		window.location.href = "mailto:info@pixel-genie.de";
+	const handleCall = () => {
+		const phoneLink = document.createElement("a");
+		phoneLink.href = `tel:${telefonPrzycisk}`;
+		phoneLink.click();
 	};
 
+	const handleEmailClick = () => {
+		window.location.href = `mailto:${emailPrzycisk}`;
+	};
+	const [textColor, setTextColor] = useState("#000000");
+	const [backgroundColor, setBackgroundColor] = useState("#ffffff");
+	const [buttonBackground, setButtonBackground] = useState("#ffffff");
+
+	const [telefon, setTelefon] = useState("");
+	const [telefonPrzycisk, setTelefonPrzycisk] = useState("");
+	const [email, setEmail] = useState("");
+	const [emailPrzycisk, setEmailPrzycisk] = useState("");
+
+	const [adres, setAdres] = useState("");
+
+	const [adresPrzycisk, setAdresPrzycisk] = useState("#000000"); // Set a default value
+	const [buttonTextColor, setButtonTextColor] = useState("#000000");
+
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				const data = await client.fetch(`*[_type == "kontakt1"][0]`);
+				if (data) {
+					setTextColor(data.textColor || "");
+					setBackgroundColor(data.backgroundColor || "#ffffff");
+					setButtonBackground(data.buttonBackground || "");
+					setTelefon(data.telefon || "");
+					setTelefonPrzycisk(data.telefonPrzycisk || "");
+					setEmail(data.email || "");
+					setEmailPrzycisk(data.emailPrzycisk || "");
+					setAdres(data.adres || "");
+					setAdresPrzycisk(data.adresPrzycisk || "");
+
+					setButtonTextColor(data.buttonTextColor || "#ffffff");
+				}
+			} catch (error) {
+				console.error("Error fetching data from Sanity:", error);
+			}
+		};
+
+		fetchData();
+	}, []);
+
+	const backgroundStyle = { backgroundColor: backgroundColor };
+
 	return (
-		<Container className=" ">
-			<Row className="my-5 py-5 justify-content-center text-center align-items-center">
-				<Col lg={4} className="mx-auto my-3">
-					<Card
-						style={{ minWidth: "18rem" }}
-						className="bg-transparent border-0 shadow-lg"
-					>
-						<Card.Body>
-							<AiOutlinePhone style={{ fontSize: "4rem" }} />
-							<Card.Title>{t("kontakt1")}</Card.Title>
-							<Card.Text>+49 173534346</Card.Text>
-							<Button className="btn-nav" onClick={handleCall}>
-								{t("kontakt2")}
-							</Button>
-						</Card.Body>
-					</Card>
-				</Col>
-				<Col lg={4} className="my-3 mx-auto">
-					<Card
-						style={{ minWidth: "18rem" }}
-						className="bg-transparent border-0 shadow-lg"
-					>
-						<Card.Body>
-							<AiOutlineMail style={{ fontSize: "4rem" }} />
-							<Card.Title>{t("kontakt3")}</Card.Title>
-							<Card.Text>info@pixel-genie.de</Card.Text>
-							<Button className="btn-nav" onClick={handleEmailClick}>
-								{t("kontakt4")}
-							</Button>
-						</Card.Body>
-					</Card>
-				</Col>
-				<Col lg={4} className="my-3 mx-auto">
-					<Card
-						style={{ minWidth: "18rem" }}
-						className="bg-transparent border-0 shadow-lg"
-					>
-						<Card.Body>
-							<HiOutlineLocationMarker style={{ fontSize: "4rem" }} />
-							<Card.Title>{t("kontakt5")}</Card.Title>
-							<Card.Text>Fasanenstr 41134 Nettetal</Card.Text>
-							<Button
-								className="btn-nav"
-								href="https://www.google.com/maps/place/Pixel-Genie/@51.2989446,6.2737063,15z/data=!4m6!3m5!1s0x47c75783bf077a0f:0x9e16ae7c216c0cb7!8m2!3d51.2989446!4d6.2737063!16s%2Fg%2F11kk7451mc"
-							>
-								{t("kontakt6")}
-							</Button>
-						</Card.Body>
-					</Card>
-				</Col>
-			</Row>
+		<Container
+			className=""
+			fluid
+			style={{
+				...backgroundStyle,
+			}}
+		>
+			<div className="py-5" style={{ color: textColor }}>
+				<Row className=" justify-content-center text-center align-items-center py-5">
+					<h1 className="py-3 text-bold">Kontakt</h1>
+					<Col lg={5} md={8} sm={8} className="mx-auto my-3 ">
+						<Card
+							style={{ minWidth: "18rem" }}
+							className="bg-transparent border-0 shadow-lg  contact-card "
+						>
+							<Card.Body>
+								<AiOutlinePhone style={{ fontSize: "4rem" }} />
+								<Card.Title>Telefon</Card.Title>
+								<Card.Text>{telefon}</Card.Text>
+								<Button
+									className="border-0"
+									onClick={handleCall}
+									style={{
+										backgroundColor: buttonBackground,
+										color: buttonTextColor,
+									}}
+								>
+									Zadzwoń
+								</Button>
+							</Card.Body>
+						</Card>
+					</Col>
+					<Col lg={5} md={8} sm={8} className="my-3 mx-auto">
+						<Card
+							style={{ minWidth: "18rem" }}
+							className="bg-transparent border-0 shadow-lg"
+						>
+							<Card.Body>
+								<AiOutlineMail style={{ fontSize: "4rem" }} />
+								<Card.Title>E-mail</Card.Title>
+								<Card.Text>{email}</Card.Text>
+								<Button
+									className="border-0"
+									onClick={handleEmailClick}
+									style={{
+										backgroundColor: buttonBackground,
+										color: buttonTextColor,
+									}}
+								>
+									Wyślij Wiadomość
+								</Button>
+							</Card.Body>
+						</Card>
+					</Col>
+					<Col lg={5} md={8} sm={8} className="my-3 mx-auto">
+						<Card
+							style={{ minWidth: "18rem" }}
+							className="bg-transparent border-0 shadow-lg"
+						>
+							<Card.Body>
+								<HiOutlineLocationMarker style={{ fontSize: "4rem" }} />
+								<Card.Title>Adres</Card.Title>
+								<Card.Text>{adres}</Card.Text>
+								<Button
+									style={{
+										backgroundColor: buttonBackground,
+										color: buttonTextColor,
+									}}
+									className="border-0"
+									onClick={() => {
+										window.open(
+											`https://www.google.com/maps/place/${encodeURIComponent(
+												adresPrzycisk
+											)}`
+										);
+									}}
+								>
+									Adres
+								</Button>
+							</Card.Body>
+						</Card>
+					</Col>
+				</Row>
+			</div>
 		</Container>
 	);
 }

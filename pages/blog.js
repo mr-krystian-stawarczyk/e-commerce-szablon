@@ -1,13 +1,13 @@
 import Blog1 from "@/components/Blog1";
-{
-	/* 		import Blog2 from "@/components/Blog2";  */
-}
+
+import Blog2 from "@/components/Blog2";
+
 import React from "react";
 import Head from "next/head";
 
 function blog() {
 	return (
-		<div className="mt-5 pt-5">
+		<div className="">
 			<Head>
 				<title>
 					Tipps, Blog, Webseite Erstellen in Nettetal | Pixel Genie Webagentur
@@ -19,7 +19,7 @@ function blog() {
 				<meta name="robots" content="index, follow" />
 			</Head>
 			<Blog1 />
-			{/* 		<Blog2 />  */}
+			<Blog2 />
 		</div>
 	);
 }

@@ -41,17 +41,36 @@ const CookieConsent = (props) => {
 				<Row className="justify-content-center text-center sticky mt-3 ">
 					<Col className="bg-black rounded">
 						<Col className="fixed inset-0 bg-slate-700 bg-opacity-70">
-							<Col className="fixed bottom-0 left-0 right-0 my-1 flex items-center justify-between px-4 py-2 bg-gray-100">
-								<Row>
-									<span className="text-light text-base my-1">
-										{t("policy28")}
-									</span>
-									<span className="text-light text-base ">{t("policy29")}</span>
-									<span className="text-light text-base ">{t("policy30")}</span>
+							<Col className="fixed bottom-0 left-0 right-0  flex items-center justify-between px-4 py-2 bg-gray-100">
+								<Row className="overflow-auto">
+									<h6 className="text-light text-base ">
+										Witryna używa plików cookie. Pliki cookie są niezbędne do
+										zapewnienia prawidłowego działania strony internetowej,
+										personalizowania treści, dostosowywania i analizowania
+										reklam oraz śledzenia ruchu na stronie. Korzystając z naszej
+										witryny, wyrażasz zgodę na używanie plików cookie zgodnie z
+										naszą polityką prywatności.
+									</h6>
+									<h6 className="text-light text-base py-1">
+										Możesz zmienić ustawienia plików cookie w swojej
+										przeglądarce lub skorzystać z narzędzi do zarządzania
+										plikami cookie, aby zablokować lub usunąć pliki cookie.
+										Jednakże, zauważ, że wyłączenie plików cookie może wpłynąć
+										na niektóre funkcje i usługi dostępne na naszej stronie.
+									</h6>
+									<h6 className="text-light text-base ">
+										Dowiedz się więcej o plikach cookie i polityce prywatności
+										na stronie. Klikając „Akceptuj” lub kontynuując korzystanie
+										z witryny, wyrażasz zgodę na używanie plików cookie.
+									</h6>
 								</Row>
 
-								<Button className="btn-nav m-2" onClick={() => acceptCookie()}>
-									{t("policy31")}
+								<Button
+									variant="dark"
+									className=" m-2"
+									onClick={() => acceptCookie()}
+								>
+									Akceptuj
 								</Button>
 							</Col>
 						</Col>

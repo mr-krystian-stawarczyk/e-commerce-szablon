@@ -1,78 +1,117 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Container, Row, Col, Card } from "react-bootstrap";
-import { urlFor } from "../lib/client";
-import sanityClient from "@sanity/client";
-
+import React, { useEffect, useState } from "react";
+import { Container, Row, Col, Card, Button } from "react-bootstrap";
+import { motion, useAnimation } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 import { useTranslation } from "react-i18next";
+import Link from "next/link";
+
+import Image from "next/image";
+import { client, urlFor } from "../lib/client";
+import imageUrlBuilder from "@sanity/image-url";
 
 function Blog2() {
 	const { t } = useTranslation();
-
-	const [blog, setBlog] = useState([]);
-	const client = sanityClient({
-		projectId: process.env.NEXT_PUBLIC_PROJECTID,
-		dataset: "production",
-		useCdn: true,
-		apiVersion: "2023-05-09",
+	const [ref, inView] = useInView({
+		threshold: 0.5,
+		triggerOnce: false,
 	});
 
-	const sectionRef = useRef(null);
-	const [animate, setAnimate] = useState(false);
-	const [animateImg, setAnimateImg] = useState(false);
-
-	const fetchData = async () => {
-		const result = await client.fetch(`*[_type == "blog"] | order(date desc)`);
-		setBlog(result);
+	const animateIn = {
+		opacity: 1,
+		transition: {
+			duration: 1,
+			ease: "easeInOut",
+		},
 	};
 
+	const controls = useAnimation();
+
 	useEffect(() => {
+		if (inView) {
+			controls.start(animateIn);
+		}
+	}, [inView, controls, animateIn]);
+
+	const [backgroundColor, setBackgroundColor] = useState("#ffffff");
+	const [articles, setArticles] = useState([]); // Store the list of articles
+	const [textColor, setTextColor] = useState("#000000");
+	const [date, setDate] = useState("");
+
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				const data = await client.fetch(`*[_type == "porady2"]`);
+				if (data) {
+					setBackgroundColor(data[0].backgroundColor || "#ffffff");
+					setTextColor(data[0].textColor || "");
+					setArticles(data); // Store the list of articles
+					setDate(data.data);
+				}
+			} catch (error) {
+				console.error("Error fetching data from Sanity:", error);
+			}
+		};
+
 		fetchData();
 	}, []);
 
-	const handleIntersection = (entries) => {
-		if (entries[0].isIntersecting) {
-			setAnimate(true);
-			setAnimateImg(true);
-		}
-	};
+	const textColorH = (() => {
+		const r = parseInt(backgroundColor.slice(1, 3), 16);
+		const g = parseInt(backgroundColor.slice(3, 5), 16);
+		const b = parseInt(backgroundColor.slice(5, 7), 16);
+		const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+		return brightness > 128 ? "black" : "white";
+	})();
 
-	useEffect(() => {
-		const observer = new IntersectionObserver(handleIntersection);
-		observer.observe(sectionRef.current);
-		return () => observer.disconnect();
-	}, []);
-
-	const { i18n } = useTranslation();
+	const backgroundStyle = { backgroundColor: backgroundColor };
+	const textStyle = { color: textColorH };
 	return (
-		<Container className=" py-3 " ref={sectionRef}>
-			<Row
-				className="justify-content-center align-items-center text-center mt-5 "
-				id="tips"
+		<motion.div ref={ref} animate={controls}>
+			<Container
+				fluid
+				className="  align-items-center justify-content-center"
+				style={{
+					...backgroundStyle,
+				}}
 			>
-				<h1 className="my-5  bold">{t("blog3")}</h1>
-			</Row>
-			<Row className="justify-content-center align-items-center text-center">
-				{blog.map((item) => (
-					<Col lg={10} className="my-3 " key={item._id}>
-						<Card className="bg-transparent m-2 p-3 shadow-lg">
-							<Card.Img
-								src={urlFor(item.image && item.image[0])}
-								alt={item.image && item.image[0].alt}
-								style={{ height: "200px", width: "200px" }}
-								className="mx-auto"
-							/>
-							<Card.Title className="py-2">
-								{item.name[i18n.language]}
-							</Card.Title>
-							<Card.Text>{item.date}</Card.Text>
-							<Card.Text>{item.details.details1[i18n.language]}</Card.Text>
-							<Card.Text>{item.details.details2[i18n.language]}</Card.Text>
-							<Card.Text>{item.details.details3[i18n.language]}</Card.Text>
-						</Card>{" "}
+				<Row className="py-1" id="blog2">
+					<Col>
+						<h1 className="text-center py-1" style={{ ...textStyle }}>
+							Najnowsze Artykuły
+						</h1>
 					</Col>
-				))}
-			</Row>
-		</Container>
+				</Row>
+				<Row className="justify-content-center  align-items-center">
+					{articles.map((article, index) => (
+						<Row key={index} className="py-3">
+							<Col key={index} className="mx-auto my-2 text-center">
+								{article.image && (
+									<Image
+										src={urlFor(article.image).url()}
+										width={400}
+										height={400}
+										className="responsive-image shadow-lg"
+										alt="Sanity Image"
+										priority
+									/>
+								)}
+								<Col md={8} className="mx-auto my-2">
+									<Card className="border-0 bg-transparent">
+										<Card.Body style={{ color: article.textColor }}>
+											<h1 className="text-bold">{article.textDuzy}</h1>
+											<Card.Text>{article.data}</Card.Text>
+											<Card.Text>{article.textMaly1}</Card.Text>
+											<Card.Text>{article.textMaly2}</Card.Text>
+											<Card.Text>{article.textMaly3}</Card.Text>
+										</Card.Body>
+									</Card>
+								</Col>
+							</Col>{" "}
+						</Row>
+					))}
+				</Row>
+			</Container>
+		</motion.div>
 	);
 }
 

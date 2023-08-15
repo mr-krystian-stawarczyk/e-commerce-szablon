@@ -1,84 +1,77 @@
-import Image from "next/image";
-import React, { useEffect } from "react";
-import { Container, Accordion, Row, Col, Card } from "react-bootstrap";
+import React, { useState, useEffect } from "react";
+import { Container, Row } from "react-bootstrap";
+import {
+	VerticalTimeline,
+	VerticalTimelineElement,
+} from "react-vertical-timeline-component";
+import "react-vertical-timeline-component/style.min.css";
 import { useTranslation } from "react-i18next";
-import { motion } from "framer-motion";
-import { useInView } from "react-intersection-observer";
-import { useAnimation } from "framer-motion";
+import { client } from "../lib/client"; // Update this import as needed
+
 function About3() {
-	const [ref, inView] = useInView({
-		threshold: 0.5,
-		triggerOnce: false,
-	});
-
-	const animateIn = {
-		opacity: 1,
-
-		transition: {
-			duration: 1,
-			ease: "easeInOut",
-		},
-	};
-
-	const controls = useAnimation();
-	useEffect(() => {
-		if (inView) {
-			controls.start(animateIn);
-		}
-	}, [inView, controls, animateIn]);
 	const { t } = useTranslation();
-	return (
-		<motion.div ref={ref} animate={controls}>
-			<Container className="my-5 py-5" id="web-design-faq">
-				<Row className="justify-content-center align-items-center">
-					<Col lg={4} md={6} xs={12} className="py-5 text-center">
-						<Image
-							src="/assets/webentwicklung-nettetal-fragen1.png"
-							width={300}
-							height={300}
-							alt="webentwicklung-nettetal-fragen1"
-							priority
-						/>
-						<h4>{t("about20")}</h4>
-					</Col>
-				</Row>
+	const [timelineData, setTimelineData] = useState([]);
+	const [backgroundColor, setBackgroundColor] = useState("#ffffff");
 
-				<Row className="justify-content-center align-items-center">
-					<Col lg={9} className="mx-auto">
-						<Accordion>
-							<Accordion.Item eventKey="0">
-								<Accordion.Header>{t("about21")}</Accordion.Header>
-								<Accordion.Body>{t("about22")}</Accordion.Body>
-							</Accordion.Item>
-							<Accordion.Item eventKey="1">
-								<Accordion.Header>{t("about23")}</Accordion.Header>
-								<Accordion.Body>{t("about24")}</Accordion.Body>
-							</Accordion.Item>
-							<Accordion.Item eventKey="2">
-								<Accordion.Header> {t("about25")} </Accordion.Header>
-								<Accordion.Body>{t("about26")}</Accordion.Body>
-							</Accordion.Item>
-							<Accordion.Item eventKey="3">
-								<Accordion.Header>{t("about27")}</Accordion.Header>
-								<Accordion.Body>{t("about28")}</Accordion.Body>
-							</Accordion.Item>
-							<Accordion.Item eventKey="4">
-								<Accordion.Header>{t("about29")}</Accordion.Header>
-								<Accordion.Body>{t("about30")}</Accordion.Body>
-							</Accordion.Item>
-							<Accordion.Item eventKey="5">
-								<Accordion.Header> {t("about31")} </Accordion.Header>
-								<Accordion.Body>{t("about32")}</Accordion.Body>
-							</Accordion.Item>
-							<Accordion.Item eventKey="6">
-								<Accordion.Header> {t("about33")} </Accordion.Header>
-								<Accordion.Body>{t("about34")}</Accordion.Body>
-							</Accordion.Item>
-						</Accordion>
-					</Col>
-				</Row>
-			</Container>
-		</motion.div>
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				const data = await client.fetch(`*[_type == "onas3"]`);
+				if (data && data.length > 0) {
+					const firstItem = data[0]; // You can choose which item to use
+					setBackgroundColor(firstItem.backgroundColor || "#ffffff");
+					data.sort((a, b) => (a.date > b.date ? 1 : -1));
+					setTimelineData(data);
+				}
+			} catch (error) {
+				console.error("Error fetching data:", error);
+			}
+		};
+
+		fetchData();
+	}, []);
+
+	const textColor = (() => {
+		const r = parseInt(backgroundColor.slice(1, 3), 16);
+		const g = parseInt(backgroundColor.slice(3, 5), 16);
+		const b = parseInt(backgroundColor.slice(5, 7), 16);
+		const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+		return brightness > 128 ? "black" : "white";
+	})();
+	const backgroundStyle = { backgroundColor: backgroundColor };
+	const textStyle = { color: textColor };
+	return (
+		<Container
+			fluid
+			className=""
+			style={{
+				...backgroundStyle,
+			}}
+		>
+			<Row className="text-center text-dark" style={textStyle}>
+				<h1 style={{ ...textStyle }} className="py-3">
+					Poznaj Naszą Podróż
+				</h1>
+			</Row>
+			<VerticalTimeline lineColor={textColor} className="text-dark">
+				{timelineData.map((item) => (
+					<VerticalTimelineElement
+						key={item._id}
+						date={item.date}
+						iconStyle={{
+							background: item.iconStyleBackground || "rgb(0, 54, 129)",
+							color: item.textColor || "#fff",
+						}}
+						contentArrowStyle={{
+							borderRight: `${textColor} 7px solid`,
+						}}
+					>
+						<h5>{item.title}</h5>
+						<p>{item.content}</p>
+					</VerticalTimelineElement>
+				))}
+			</VerticalTimeline>
+		</Container>
 	);
 }
 

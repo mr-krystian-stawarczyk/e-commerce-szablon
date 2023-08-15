@@ -1,142 +1,77 @@
-import React from "react";
-import { useEffect } from "react";
-import { Container, Row, Col, Card } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { Container, Accordion, Row, Col } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
-import { motion } from "framer-motion";
-import { useInView } from "react-intersection-observer";
-import { useAnimation } from "framer-motion";
-function About4() {
+import { client } from "../lib/client";
+import Image from "next/image";
+
+// Import the type
+
+function Header6() {
 	const { t } = useTranslation();
-	const [ref1, inView1] = useInView({
-		threshold: 0.5,
-		triggerOnce: false,
-	});
-
-	const [ref2, inView2] = useInView({
-		threshold: 0.5,
-		triggerOnce: false,
-	});
-	const [ref3, inView3] = useInView({
-		threshold: 0.5,
-		triggerOnce: false,
-	});
-
-	const [ref4, inView4] = useInView({
-		threshold: 0.5,
-		triggerOnce: false,
-	});
-
-	const animateIn = {
-		opacity: 1,
-		transition: {
-			duration: 1,
-			ease: "easeInOut",
-		},
-	};
-
-	const controls1 = useAnimation();
-	const controls2 = useAnimation();
-	const controls3 = useAnimation();
-	const controls4 = useAnimation();
+	const [accordionData, setAccordionData] = useState([]);
+	const [backgroundColor, setBackgroundColor] = useState("#ffffff");
 
 	useEffect(() => {
-		if (inView1) {
-			controls1.start(animateIn);
-		}
-	}, [inView1, controls1, animateIn]);
+		const fetchData = async () => {
+			try {
+				const data = await client.fetch(`*[_type == "onas4-faq"]`);
+				if (data) {
+					setBackgroundColor(data[0].backgroundColor || "#ffffff");
+					setAccordionData(data[0].accordionItems);
+				}
+			} catch (error) {
+				console.error("Error fetching data from Sanity:", error);
+			}
+		};
 
-	useEffect(() => {
-		let timeout;
-		if (inView2) {
-			timeout = setTimeout(() => {
-				controls2.start(animateIn);
-			}, 500);
-		}
+		fetchData();
+	}, []);
 
-		return () => clearTimeout(timeout);
-	}, [inView2, controls2, animateIn]);
+	const textColor = (() => {
+		const r = parseInt(backgroundColor.slice(1, 3), 16);
+		const g = parseInt(backgroundColor.slice(3, 5), 16);
+		const b = parseInt(backgroundColor.slice(5, 7), 16);
+		const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+		return brightness > 128 ? "black" : "white";
+	})();
 
-	useEffect(() => {
-		let timeout;
-		if (inView3) {
-			timeout = setTimeout(() => {
-				controls3.start(animateIn);
-			}, 1000);
-		}
-
-		return () => clearTimeout(timeout);
-	}, [inView3, controls3, animateIn]);
-
-	useEffect(() => {
-		let timeout;
-		if (inView4) {
-			timeout = setTimeout(() => {
-				controls4.start(animateIn);
-			}, 1900);
-		}
-
-		return () => clearTimeout(timeout);
-	}, [inView4, controls4, animateIn]);
+	const textStyle = { color: textColor };
+	const backgroundStyle = { backgroundColor: backgroundColor };
 	return (
-		<Container className="my-5 py-5">
-			<Row className="text-center my-5">
-				<h1>{t("about3")}</h1>
-				<h3>{t("about4")}</h3>
-			</Row>
-			<Row className="justify-content-center text-center align-items-center">
-				<Col lg={3} className="mx-auto">
-					<motion.div
-						ref={ref1}
-						animate={controls1}
-						initial={{ opacity: 0 }}
-						transition={{ delay: 1 }}
-					>
-						<Card className="border-0 bg-transparent ">
-							<Card.Body>
-								<h1>1</h1>
-								<Card.Text>{t("about5")}</Card.Text>
-								<Card.Text>{t("about6")}</Card.Text>
-							</Card.Body>
-						</Card>
-					</motion.div>
+		<Container
+			className="  py-5"
+			fluid
+			id="web-design-faq"
+			style={{
+				...backgroundStyle,
+			}}
+		>
+			<Row className="justify-content-center align-items-center">
+				<Col lg={4} md={6} xs={12} className="py-5 text-center">
+					<Image
+						src="/assets/webentwicklung-nettetal-fragen1.png"
+						width={300}
+						height={300}
+						alt="webentwicklung-nettetal-fragen1"
+						priority
+					/>
+					<h4 style={{ ...textStyle }}>Najczęściej Zadawane Pytania</h4>
 				</Col>
-				<Col lg={3} className="mx-auto">
-					<motion.div
-						ref={ref2}
-						animate={controls2}
-						initial={{ opacity: 0 }}
-						transition={{ delay: 1 }}
-					>
-						{" "}
-						<Card className="border-0 bg-transparent ">
-							<Card.Body>
-								<h1>2</h1>
-								<Card.Text>{t("about7")}</Card.Text>
-								<Card.Text>{t("about8")}</Card.Text>
-							</Card.Body>
-						</Card>{" "}
-					</motion.div>
-				</Col>{" "}
-				<Col lg={3} className="mx-auto">
-					<motion.div
-						ref={ref3}
-						animate={controls3}
-						initial={{ opacity: 0 }}
-						transition={{ delay: 1 }}
-					>
-						{" "}
-						<Card className="border-0 bg-transparent ">
-							<Card.Body>
-								<h1>3</h1>
-								<Card.Text>{t("about9")}</Card.Text>
-								<Card.Text>{t("about10")}</Card.Text>
-							</Card.Body>
-						</Card>{" "}
-					</motion.div>
+			</Row>
+			<Row className="justify-content-center align-items-center">
+				<Col lg={9} className="mx-auto">
+					<Accordion className="shadow-lg">
+						{accordionData.map((item, index) => (
+							<Accordion.Item key={index} eventKey={index.toString()}>
+								<Accordion.Header>{item.title}</Accordion.Header>
+								<Accordion.Body>{item.content}</Accordion.Body>
+							</Accordion.Item>
+						))}
+					</Accordion>
 				</Col>
 			</Row>
 		</Container>
 	);
 }
 
-export default About4;
+export default Header6;

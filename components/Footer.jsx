@@ -1,23 +1,32 @@
 import Link from "next/link";
-import React, { useRef, useEffect } from "react";
-import { Container, Row, Col, Card } from "react-bootstrap";
+import React, { useRef, useEffect, useState } from "react";
+import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { useAnimation } from "framer-motion";
 import { useTranslation } from "react-i18next";
 
-import {
-	AiOutlineFacebook,
-	AiFillGithub,
-	AiOutlineLinkedin,
-} from "react-icons/ai";
+import { AiOutlineFacebook, AiOutlineInstagram } from "react-icons/ai";
 
+import { BsSnapchat } from "react-icons/bs";
+import { client, urlFor } from "../lib/client";
 function Footer() {
 	const { t } = useTranslation();
 	const sectionRef = useRef(null);
+	const [backgroundColor, setBackgroundColor] = useState("#ffffff");
+	const [textColor, setTextColor] = useState("#000000");
+	const [nazwaFirmy, setNazwaFirmy] = useState("");
 
-	const handleEmailClick = () => {
-		window.location.href = "mailto:info@pixel-genie.de";
+	const [fbLink, setFbLink] = useState("");
+	const [snLink, setSnLink] = useState("");
+	const [instaLink, setInstaLink] = useState("");
+
+	const [email, setEmail] = useState("");
+
+	const handleLinkClick = (link) => {
+		if (link) {
+			window.open(`https://${encodeURIComponent(link)}`);
+		}
 	};
 
 	const [ref, inView] = useInView({
@@ -34,130 +43,212 @@ function Footer() {
 		},
 	};
 
+	const [categories, setCategories] = useState([]);
+
+	useEffect(() => {
+		const fetchCategories = async () => {
+			try {
+				const categoryData = await client.fetch(
+					`*[_type == "category"] | order(_createdAt) [0...4]`
+				);
+				setCategories(categoryData);
+			} catch (error) {
+				console.error("Error fetching categories from Sanity:", error);
+			}
+		};
+
+		fetchCategories();
+	}, []);
+
 	const controls = useAnimation();
 	useEffect(() => {
 		if (inView) {
 			controls.start(animateIn);
 		}
 	}, [inView, controls, animateIn]);
+
+	const handleEmailClick = () => {
+		window.location.href = `mailto:${email}`;
+	};
+
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				const data = await client.fetch(`*[_type == "footer"][0]`);
+				if (data) {
+					setBackgroundColor(data.backgroundColor || "#ffffff");
+					setNazwaFirmy(data.nazwaFirmy || "");
+					setFbLink(data.fbLink || "");
+					setSnLink(data.snLink || "");
+					setInstaLink(data.istaLink || "");
+					setTextColor(data.textColor || "");
+					setEmail(data.email || "");
+				}
+			} catch (error) {
+				console.error("Error fetching data from Sanity:", error);
+			}
+		};
+
+		fetchData();
+	}, []);
+
+	const backgroundStyle = { backgroundColor: backgroundColor };
+
 	return (
 		<Container
 			fluid
-			className="overflow-hidden shadow-md bg-black text-white"
+			className="overflow-hidden shadow-md "
+			style={{
+				backgroundColor: backgroundColor,
+				color: textColor,
+			}}
 			ref={sectionRef}
 			id="contact"
 		>
 			<motion.div ref={ref} animate={controls}>
 				<Row className=" justify-content-center align-items-top text-center  mt-2  border-bottom">
+					<Col lg={3} sm={6} className=" mx-auto">
+						<Card
+							style={{ width: "20rem" }}
+							className="bg-transparent border-0  "
+						>
+							<Card.Body className="">
+								<Card.Title className="my-3">Nasza firma</Card.Title>
+								<Link href="about" className="footer-links">
+									<Card.Text
+										className="py-2 hover"
+										style={{
+											color: textColor,
+										}}
+									>
+										{" "}
+										O nas
+									</Card.Text>
+								</Link>
+								<Link href="contact" className="footer-links">
+									<Card.Text
+										className="py-2 hover"
+										style={{
+											color: textColor,
+										}}
+									>
+										Kontakt
+									</Card.Text>
+								</Link>
+								<Link href="blog" className="footer-links">
+									<Card.Text
+										className="py-2 hover"
+										style={{
+											color: textColor,
+										}}
+									>
+										Porady
+									</Card.Text>
+								</Link>
+								<Link href="contact" className="footer-links">
+									<Card.Text
+										className="py-2 hover"
+										style={{
+											color: textColor,
+										}}
+									>
+										Pytania
+									</Card.Text>
+								</Link>
+							</Card.Body>
+						</Card>
+					</Col>
 					<Col lg={3} sm={6} className="mx-auto">
 						<Card
 							style={{ width: "20rem" }}
-							className="bg-transparent border-0 shadow-lg "
+							className="bg-transparent border-0  "
 						>
-							<Card.Body className="">
-								<Card.Title className="my-3">{t("footer1")}</Card.Title>
-								<Link href="web" className="footer-links">
-									<Card.Text className="py-2">{t("footer2")}</Card.Text>
-								</Link>
-								<Link href="seo" className="footer-links">
-									<Card.Text className="py-2">{t("footer3")}</Card.Text>
-								</Link>
-								<Link href="branding" className="footer-links">
-									<Card.Text className="py-2">{t("footer4")}</Card.Text>
-								</Link>
-								<Link href="media" className="footer-links">
-									<Card.Text className="py-2">{t("footer5")}</Card.Text>
-								</Link>
-								<Link href="socialmedia" className="footer-links">
-									<Card.Text className="py-2">{t("footer6")}</Card.Text>
-								</Link>
+							<Card.Body className="d-flex justify-content-center flex-column align-items-center">
+								<Card.Title className="my-3">Produkty</Card.Title>
+								{categories &&
+									categories.map((category) => (
+										<Link
+											key={category._id}
+											href="products"
+											className="mx-2 rounded my-2 btn-dark footer-links hover"
+											style={{
+												color: textColor,
+											}}
+										>
+											{category.name}
+										</Link>
+									))}
 							</Card.Body>
 						</Card>
 					</Col>
 					<Col lg={3} sm={6} className=" mx-auto">
 						<Card
 							style={{ width: "20rem" }}
-							className="bg-transparent border-0 shadow-lg "
+							className="bg-transparent border-0  "
 						>
 							<Card.Body className="">
-								<Card.Title className="my-3">{t("footer7")}</Card.Title>
-								<Link href="about" className="footer-links">
-									<Card.Text className="py-2"> {t("footer8")}</Card.Text>
-								</Link>
-								<Link href="contact" className="footer-links">
-									<Card.Text className="py-2">{t("footer9")}</Card.Text>
-								</Link>
-								<Link href="blog" className="footer-links">
-									<Card.Text className="py-2">{t("footer10")}</Card.Text>
-								</Link>
-								<Link href="#contact" className="footer-links">
-									<Card.Text className="py-2">{t("footer12")}</Card.Text>
-								</Link>
-							</Card.Body>
-						</Card>
-					</Col>
-					<Col lg={3} sm={6} className=" mx-auto">
-						<Card
-							style={{ width: "20rem" }}
-							className="bg-transparent border-0 shadow-lg "
-						>
-							<Card.Body className="">
-								<Card.Title className="my-3">{t("footer13")}</Card.Title>
-								<Link
-									href="https://www.facebook.com/pixelgeniewebagentur"
-									target="_blank"
-								>
-									<Card.Text className="footer-links">
+								<Card.Title className="my-3">Social Media</Card.Title>
+
+								<Card.Text className="footer-links contact-links">
+									<a onClick={() => handleLinkClick(fbLink)} target="_blank">
 										<AiOutlineFacebook
 											style={{ fontSize: "3rem" }}
-											className="my-2"
+											className="contact-icons fb-icon"
 										/>
-									</Card.Text>
-								</Link>
-								<Link
-									href="https://www.linkedin.com/in/krystian-stawarczyk-240476212/"
-									target="_blank"
-								>
-									<Card.Text className="footer-links">
-										<AiOutlineLinkedin
+									</a>
+								</Card.Text>
+
+								<Card.Text className="footer-links contact-links">
+									<a onClick={() => handleLinkClick(instaLink)} target="_blank">
+										<AiOutlineInstagram
 											style={{ fontSize: "3rem" }}
-											className="my-2"
+											className="contact-icons in-icon"
 										/>
-									</Card.Text>
-								</Link>
-								<Link
-									href="https://github.com/mr-krystian-stawarczyk"
-									target="_blank"
-								>
-									<Card.Text className="footer-links">
-										<AiFillGithub
+									</a>
+								</Card.Text>
+
+								<Card.Text className="footer-links contact-links">
+									<a onClick={() => handleLinkClick(snLink)} target="_blank">
+										<BsSnapchat
 											style={{ fontSize: "3rem" }}
-											className="my-2"
+											className="contact-icons sn-icon"
 										/>
-									</Card.Text>
-								</Link>
+									</a>
+								</Card.Text>
 							</Card.Body>
 						</Card>
 					</Col>
 					<Col lg={3} sm={6} className=" mx-auto">
 						<Card
-							className="bg-transparent border-0 shadow-lg pt-3 "
+							className="bg-transparent border-0  pt-3 "
 							style={{ width: "20rem" }}
 						>
-							<Card.Title className="my-3">{t("footer14")}</Card.Title>
-							<h4 className="py-5" onClick={handleEmailClick}>
-								info@pixel-genie.de
-							</h4>
+							<Card.Title className="my-3">Kontakt</Card.Title>
+							<a
+								onClick={handleEmailClick}
+								className="footer-links hover"
+								style={{
+									color: textColor,
+								}}
+							>
+								<h4 className="py-5">{email}</h4>
+							</a>
 						</Card>
 					</Col>
 				</Row>
 				<Row className="text-center my-2">
 					<Col>
-						<h6>2023 Pixel Genie All Rights Reserved</h6>
+						<h6>2023 {nazwaFirmy} All Rights Reserved</h6>
 					</Col>
 					<Col>
-						<Link href="/policy" className="footer-links">
-							<h6>Cookies & Imprint</h6>
+						<Link
+							href="/policy"
+							className="footer-links "
+							style={{
+								color: textColor,
+							}}
+						>
+							<h6 className="hover">Polityka & Cookies</h6>
 						</Link>
 					</Col>
 				</Row>
