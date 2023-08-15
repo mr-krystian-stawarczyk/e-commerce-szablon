@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Card } from "react-bootstrap";
-import { useTranslation } from "react-i18next";
+
 import { client } from "../lib/client";
 
 function Policy() {
 	const [policyData, setPolicyData] = useState([]);
-	const { t } = useTranslation();
 
 	useEffect(() => {
 		const fetchData = async () => {

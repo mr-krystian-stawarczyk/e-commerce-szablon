@@ -2,11 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Col, Container, Row, Card, Button } from "react-bootstrap";
 import { AiOutlinePhone, AiOutlineMail } from "react-icons/ai";
 import { HiOutlineLocationMarker } from "react-icons/hi";
-import { useTranslation } from "react-i18next";
+
 import { client, urlFor } from "../lib/client";
 function Contact1() {
-	const { t } = useTranslation();
-
 	const handleCall = () => {
 		const phoneLink = document.createElement("a");
 		phoneLink.href = `tel:${telefonPrzycisk}`;

@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Card, Container, Button, Row, Col } from "react-bootstrap";
-import { useTranslation } from "react-i18next";
+
 import Link from "next/link";
 import Image from "next/image";
 import { client, urlFor } from "../lib/client";
 import imageUrlBuilder from "@sanity/image-url";
 
 const Header1 = () => {
-	const { t } = useTranslation();
 	const [backgroundType, setBackgroundType] = useState("color");
 	const [backgroundColor, setBackgroundColor] = useState("#ffffff");
 	const [backgroundImage, setBackgroundImage] = useState(null);

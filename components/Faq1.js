@@ -2,9 +2,7 @@ import Image from "next/image";
 import React from "react";
 import { Container, Accordion, Row, Col } from "react-bootstrap";
 
-import { useTranslation } from "react-i18next";
 function Faq1() {
-	const { t } = useTranslation();
 	return (
 		<Container className=" mb-5 pb-5" id="web-design-faq">
 			<Row className="justify-content-center align-items-center">

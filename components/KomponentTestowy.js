@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Card, Container, Button, Row, Col } from "react-bootstrap";
-import { useTranslation } from "react-i18next";
+
 import Link from "next/link";
 import Image from "next/image";
 import { client, urlFor } from "../lib/client";
 
 const KomponentTestowy = () => {
-	const { t } = useTranslation();
 	const [backgroundColor, setBackgroundColor] = useState("#ffffff"); // Default background color
 	const [textColor, setTextColor] = useState("black"); // Default text color
 

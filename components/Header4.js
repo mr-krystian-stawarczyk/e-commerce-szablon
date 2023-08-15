@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import { motion, useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { useTranslation } from "react-i18next";
+
 import Link from "next/link";
 
 import Image from "next/image";
@@ -10,8 +10,6 @@ import { client, urlFor } from "../lib/client";
 import imageUrlBuilder from "@sanity/image-url";
 
 function Header4() {
-	const { t } = useTranslation();
-
 	const [windowWidth, setWindowWidth] = useState(0);
 	useEffect(() => {
 		const handleResize = () => {

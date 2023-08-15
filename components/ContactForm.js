@@ -7,7 +7,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { useAnimation } from "framer-motion";
-import { useTranslation } from "react-i18next";
+
 export const ContactForm = () => {
 	const router = useRouter();
 	const { t } = useTranslation();

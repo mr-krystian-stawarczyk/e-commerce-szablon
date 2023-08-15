@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Container, Accordion, Row, Col } from "react-bootstrap";
-import { useTranslation } from "react-i18next";
+
 import { client } from "../lib/client";
 import Image from "next/image";
 
 // Import the type
 
 function Produkty3Faq() {
-	const { t } = useTranslation();
 	const [accordionData, setAccordionData] = useState([]);
 	const [backgroundColor, setBackgroundColor] = useState("#ffffff");
 

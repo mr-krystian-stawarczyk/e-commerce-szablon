@@ -5,11 +5,10 @@ import {
 	VerticalTimelineElement,
 } from "react-vertical-timeline-component";
 import "react-vertical-timeline-component/style.min.css";
-import { useTranslation } from "react-i18next";
+
 import { client } from "../lib/client"; // Update this import as needed
 
 function About3() {
-	const { t } = useTranslation();
 	const [timelineData, setTimelineData] = useState([]);
 	const [backgroundColor, setBackgroundColor] = useState("#ffffff");
 

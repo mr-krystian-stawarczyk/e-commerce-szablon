@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { Container, Row, Col, Card } from "react-bootstrap";
-import { useTranslation } from "react-i18next";
+
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { useAnimation } from "framer-motion";
@@ -23,7 +23,6 @@ function About2() {
 	const [textMaly6, setTextMaly6] = useState("");
 	const [textColor, setTextColor] = useState("#000000");
 
-	const { t } = useTranslation();
 	const [ref1, inView1] = useInView({
 		threshold: 0.5,
 		triggerOnce: false,

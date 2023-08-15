@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { hasCookie, setCookie } from "cookies-next";
 import { Button, Col, Row } from "react-bootstrap";
-import { useTranslation } from "react-i18next";
+
 import { CookiesProvider, useCookies } from "react-cookie";
 const CookieConsent = (props) => {
 	const [showConsent, setShowConsent] = useState(true);
-	const { t } = useTranslation();
+
 	const [cookies, setCookies] = useCookies(["localConsent"]);
 
 	useEffect(() => {

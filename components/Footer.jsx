@@ -4,14 +4,12 @@ import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { useAnimation } from "framer-motion";
-import { useTranslation } from "react-i18next";
 
 import { AiOutlineFacebook, AiOutlineInstagram } from "react-icons/ai";
 
 import { BsSnapchat } from "react-icons/bs";
 import { client, urlFor } from "../lib/client";
 function Footer() {
-	const { t } = useTranslation();
 	const sectionRef = useRef(null);
 	const [backgroundColor, setBackgroundColor] = useState("#ffffff");
 	const [textColor, setTextColor] = useState("#000000");

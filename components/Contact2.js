@@ -3,12 +3,10 @@ import { Container, Row, Col, Card } from "react-bootstrap";
 import Link from "next/link";
 import { AiOutlineFacebook, AiOutlineInstagram } from "react-icons/ai";
 import { client, urlFor } from "../lib/client";
-import { useTranslation } from "react-i18next";
+
 import { BsSnapchat } from "react-icons/bs";
 import { useState, useEffect } from "react";
 function Contact2() {
-	const { t } = useTranslation();
-
 	const [textColor, setTextColor] = useState("#000000");
 	const [backgroundColor, setBackgroundColor] = useState("#ffffff");
 	const [textDuzy, setTextDuzy] = useState("");
