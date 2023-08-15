@@ -7,7 +7,7 @@ export default defineConfig({
   name: 'default',
   title: 'sanity ecommerce',
 
-  projectId: 'ma7izmez',
+  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
   dataset: 'production',
 
   plugins: [deskTool(), visionTool()],
