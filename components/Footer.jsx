@@ -111,7 +111,7 @@ function Footer() {
 							className="bg-transparent border-0  "
 						>
 							<Card.Body className="">
-								<Card.Title className="my-3">Nasza firma</Card.Title>
+								<Card.Title className="my-3 ">Nasza firma</Card.Title>
 								<Link href="about" className="footer-links">
 									<Card.Text
 										className="py-2 hover"
@@ -167,7 +167,7 @@ function Footer() {
 									categories.map((category) => (
 										<Link
 											key={category._id}
-											href="products"
+											href="/products"
 											className="mx-2 rounded my-2 btn-dark footer-links hover"
 											style={{
 												color: textColor,

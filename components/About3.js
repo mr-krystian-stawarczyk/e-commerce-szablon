@@ -42,7 +42,7 @@ function About3() {
 	return (
 		<Container
 			fluid
-			className=""
+			className=" py-5"
 			style={{
 				...backgroundStyle,
 			}}

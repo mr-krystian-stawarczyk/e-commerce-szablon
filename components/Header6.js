@@ -38,7 +38,7 @@ function Header6() {
 	const backgroundStyle = { backgroundColor: backgroundColor };
 	return (
 		<Container
-			className=" mb-5 pb-5"
+			className="  py-5"
 			fluid
 			id="web-design-faq"
 			style={{
@@ -54,7 +54,7 @@ function Header6() {
 						alt="webentwicklung-nettetal-fragen1"
 						priority
 					/>
-					<h4 style={{ ...textStyle }}>Najczęściej Zadawane Pytania</h4>
+					<h4 className="text-dark">Najczęściej Zadawane Pytania</h4>
 				</Col>
 			</Row>
 			<Row className="justify-content-center align-items-center">

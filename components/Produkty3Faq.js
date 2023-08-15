@@ -54,7 +54,7 @@ function Produkty3Faq() {
 						alt="webentwicklung-nettetal-fragen1"
 						priority
 					/>
-					<h4 style={{ ...textStyle }}>Najczęściej Zadawane Pytania</h4>
+					<h4 className="text-dark">Najczęściej Zadawane Pytania</h4>
 				</Col>
 			</Row>
 			<Row className="justify-content-center align-items-center">

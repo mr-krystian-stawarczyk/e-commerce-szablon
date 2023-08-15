@@ -11,12 +11,17 @@ export default {
       description: 'Wybierz kolor tekstu.',
       options: {
         list: [
-          {title: 'White', value: 'white'},
-          {title: 'Black', value: 'black'},
-          {title: 'Red', value: 'red'},
-          {title: 'Green', value: 'green'},
-          {title: 'Blue', value: 'blue'},
-          // Add more color options as needed
+          {title: 'Biały', value: 'white'},
+          {title: 'Czarny', value: 'black'},
+          {title: 'Czerwony', value: '#9B2335'},
+          {title: 'Zielony', value: '#88B04B'},
+          {title: 'Niebieski', value: '#34568B'},
+          {title: 'Różowy', value: '#F7CAC9'},
+          {title: 'Żółty', value: '#EFC050'},
+          {title: 'Pomarańczowy', value: '#DD4124'},
+          {title: 'Fioletowy', value: '#6B5B95'},
+          {title: 'Turkusowy', value: '#45B8AC'},
+          // Dodaj więcej opcji kolorów, jeśli potrzebujesz
         ],
       },
     },
@@ -41,11 +46,16 @@ export default {
       description: 'Wybierz kolor tła przycisków.',
       options: {
         list: [
-          {title: 'Biały', value: '#ffffff'},
-          {title: 'Czarny', value: '#000000'},
-          {title: 'Czerwony', value: '#ff0000'},
-          {title: 'Zielony', value: '#00ff00'},
-          {title: 'Niebieski', value: '#0000ff'},
+          {title: 'Biały', value: 'white'},
+          {title: 'Czarny', value: 'black'},
+          {title: 'Czerwony', value: '#9B2335'},
+          {title: 'Zielony', value: '#88B04B'},
+          {title: 'Niebieski', value: '#34568B'},
+          {title: 'Różowy', value: '#F7CAC9'},
+          {title: 'Żółty', value: '#EFC050'},
+          {title: 'Pomarańczowy', value: '#DD4124'},
+          {title: 'Fioletowy', value: '#6B5B95'},
+          {title: 'Turkusowy', value: '#45B8AC'},
           // Dodaj więcej opcji kolorów, jeśli potrzebujesz
         ],
       },
@@ -59,9 +69,14 @@ export default {
         list: [
           {title: 'Biały', value: 'white'},
           {title: 'Czarny', value: 'black'},
-          {title: 'Czerwony', value: 'red'},
-          {title: 'Zielony', value: 'green'},
-          {title: 'Niebieski', value: 'blue'},
+          {title: 'Czerwony', value: '#9B2335'},
+          {title: 'Zielony', value: '#88B04B'},
+          {title: 'Niebieski', value: '#34568B'},
+          {title: 'Różowy', value: '#F7CAC9'},
+          {title: 'Żółty', value: '#EFC050'},
+          {title: 'Pomarańczowy', value: '#DD4124'},
+          {title: 'Fioletowy', value: '#6B5B95'},
+          {title: 'Turkusowy', value: '#45B8AC'},
           // Dodaj więcej opcji kolorów, jeśli potrzebujesz
         ],
       },
