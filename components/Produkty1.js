@@ -85,8 +85,9 @@ const Produkty1 = () => {
 	return (
 		<Container fluid className="py-5 bg-white  ">
 			<Row className="text-center align-items-center justify-content-center pt-5">
+				{" "}
 				<h1 className="text-dark my-5">Sprawdź Nasz Asortyment</h1>
-				<ButtonGroup className="justify-content-center button-group-container">
+				<ButtonGroup className=" button-group-container overflow-hidden">
 					<Button
 						onClick={sortByPrice}
 						className="mx-auto rounded my-2 btn-dark"

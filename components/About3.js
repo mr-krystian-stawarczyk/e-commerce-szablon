@@ -42,15 +42,13 @@ function About3() {
 	return (
 		<Container
 			fluid
-			className=" py-5"
+			className=" py-5 overflow-hidden"
 			style={{
 				...backgroundStyle,
 			}}
 		>
 			<Row className="text-center text-dark" style={textStyle}>
-				<h1 style={{ ...textStyle }} className="py-3">
-					Poznaj Naszą Podróż
-				</h1>
+				<h1 className="py-3">Poznaj Naszą Podróż</h1>
 			</Row>
 			<VerticalTimeline lineColor={textColor} className="text-dark">
 				{timelineData.map((item) => (

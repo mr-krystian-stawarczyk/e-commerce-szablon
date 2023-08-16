@@ -111,8 +111,8 @@ function Footer() {
 							className="bg-transparent border-0  "
 						>
 							<Card.Body className="">
-								<Card.Title className="my-3 ">Nasza firma</Card.Title>
-								<Link href="about" className="footer-links">
+								<h3 className="my-3 text-bold">Nasza firma</h3>
+								<Link href="/about" className="footer-links">
 									<Card.Text
 										className="py-2 hover"
 										style={{
@@ -123,7 +123,7 @@ function Footer() {
 										O nas
 									</Card.Text>
 								</Link>
-								<Link href="contact" className="footer-links">
+								<Link href="/contact" className="footer-links">
 									<Card.Text
 										className="py-2 hover"
 										style={{
@@ -133,7 +133,7 @@ function Footer() {
 										Kontakt
 									</Card.Text>
 								</Link>
-								<Link href="blog" className="footer-links">
+								<Link href="/blog" className="footer-links">
 									<Card.Text
 										className="py-2 hover"
 										style={{
@@ -143,7 +143,7 @@ function Footer() {
 										Porady
 									</Card.Text>
 								</Link>
-								<Link href="contact" className="footer-links">
+								<Link href="/contact" className="footer-links">
 									<Card.Text
 										className="py-2 hover"
 										style={{
@@ -162,7 +162,7 @@ function Footer() {
 							className="bg-transparent border-0  "
 						>
 							<Card.Body className="d-flex justify-content-center flex-column align-items-center">
-								<Card.Title className="my-3">Produkty</Card.Title>
+								<h3 className="my-3 text-bold">Produkty</h3>
 								{categories &&
 									categories.map((category) => (
 										<Link
@@ -185,7 +185,7 @@ function Footer() {
 							className="bg-transparent border-0  "
 						>
 							<Card.Body className="">
-								<Card.Title className="my-3">Social Media</Card.Title>
+								<h3 className="my-3 text-bold">Social Media </h3>
 
 								<Card.Text className="footer-links contact-links">
 									<a onClick={() => handleLinkClick(fbLink)} target="_blank">
@@ -221,7 +221,7 @@ function Footer() {
 							className="bg-transparent border-0  pt-3 "
 							style={{ width: "20rem" }}
 						>
-							<Card.Title className="my-3">Kontakt</Card.Title>
+							<h3 className="my-3 text-bold">Kontakt</h3>
 							<a
 								onClick={handleEmailClick}
 								className="footer-links hover"

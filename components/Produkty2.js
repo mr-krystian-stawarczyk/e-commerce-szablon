@@ -1,5 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Container, Row, Button, ButtonGroup, Col } from "react-bootstrap";
+import {
+	Container,
+	Row,
+	Button,
+	ButtonGroup,
+	Col,
+	DropdownButton,
+	Dropdown,
+} from "react-bootstrap";
 import { client } from "../lib/client";
 import Product from "./Products";
 
@@ -95,30 +103,30 @@ const Produkty2 = () => {
 		<Container fluid className="py-5 bg-light  ">
 			<Row className="text-center align-items-center justify-content-center pt-5">
 				<h1 className="text-dark my-5">Przeglądaj Kategorie</h1>{" "}
-				<Col md={4}>
-					{" "}
+				<ButtonGroup className="  overflow-hidden">
 					<Button
 						onClick={handleSortByPrice}
-						className="mx-2 rounded my-2 btn-dark"
+						className="mx-auto rounded my-2 btn-dark "
 					>
 						Sortuj po cenie
-					</Button>
-				</Col>
+					</Button>{" "}
+				</ButtonGroup>
 			</Row>
-			<Row>
-				<ButtonGroup className="justify-content-center button-group-container">
-					{" "}
-					{/* Przyciski dla każdej kategorii */}
-					{categories.map((category) => (
-						<Button
-							key={category._id}
-							onClick={() => setSelectedCategory(category.name)}
-							className="mx-2 rounded my-2 btn-dark"
-						>
-							{category.name}
-						</Button>
-					))}
-				</ButtonGroup>{" "}
+			<Row className="text-center align-items-center justify-content-center">
+				<Dropdown drop="down-centered">
+					<DropdownButton
+						title="Wybierz kategorię"
+						variant="dark"
+						onSelect={(category) => setSelectedCategory(category)}
+						className="my-2 px-3 "
+					>
+						{categories.map((category) => (
+							<Dropdown.Item key={category._id} eventKey={category.name}>
+								{category.name}
+							</Dropdown.Item>
+						))}
+					</DropdownButton>
+				</Dropdown>
 			</Row>
 			<Row className="justify-content-center align-items-center text-center">
 				{products.slice(0, visibleProducts).map((product) => (
@@ -126,7 +134,7 @@ const Produkty2 = () => {
 				))}
 			</Row>
 			<Row className="text-center">
-				<Col md={12}>
+				<Col md={11}>
 					{!showMore && products.length > visibleProducts && (
 						<Button onClick={handleShowMore} className="mt-3 btn-dark">
 							Pokaż więcej

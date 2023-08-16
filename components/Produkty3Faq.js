@@ -38,7 +38,7 @@ function Produkty3Faq() {
 	const backgroundStyle = { backgroundColor: backgroundColor };
 	return (
 		<Container
-			className=" mb-5 pb-5"
+			className=" py-5"
 			fluid
 			id="web-design-faq"
 			style={{

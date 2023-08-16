@@ -157,17 +157,14 @@ function About2() {
 	return (
 		<Container
 			fluid
-			className={`py-5  ${isMobile ? "min-vh-100" : "vh-100"}`}
-			style={{
-				...backgroundStyle,
-				color: textColor,
-			}}
+			className={`d-flex flex-column py-5 justify-content-center align-items-center min-vh-100`}
+			style={{ ...backgroundStyle, color: textColor }}
 		>
-			<Row className="text-center my-2">
+			<Row className="text-center d-row my-2">
 				<h1>{textDuzy1}</h1>
 				<h3>{textDuzy2}</h3>
 			</Row>
-			<Row className="justify-content-center text-center align-items-center ">
+			<Row className=" text-center  ">
 				<Col lg={3} className="mx-auto">
 					<motion.div
 						ref={ref1}

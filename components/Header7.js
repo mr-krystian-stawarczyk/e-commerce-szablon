@@ -73,7 +73,7 @@ const Header7 = () => {
 					))}
 				</Carousel>
 				<Col>
-					<Button href="products" className="my-5 btn-dark">
+					<Button href="products" className="my-5 btn-dark overflow-hidden">
 						Produkty
 					</Button>
 				</Col>

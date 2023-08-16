@@ -126,7 +126,7 @@ function Header4() {
 		<motion.div ref={ref} animate={controls} id="header2">
 			<Container
 				fluid
-				className={`d-flex align-items-center justify-content-center ${
+				className={`d-flex py-3 align-items-center justify-content-center ${
 					isMobile ? "min-vh-100" : "vh-100"
 				}`}
 				style={{

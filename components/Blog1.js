@@ -90,13 +90,13 @@ function Blog1() {
 		<motion.div ref={ref} animate={controls} id="header2">
 			<Container
 				fluid
-				className="vh-100 d-flex align-items-center justify-content-center"
+				className="vh-100 d-flex py-5 align-items-center justify-content-center "
 				style={{
 					...backgroundStyle,
 				}}
 			>
-				<Row className="justify-content-center  align-items-center">
-					<Col lg={5} className="mx-auto my-2 text-center ">
+				<Row className="justify-content-center  align-items-center pt-5">
+					<Col lg={5} xs={8} className="mx-auto my-2 text-center ">
 						{image && (
 							<Image
 								src={image}

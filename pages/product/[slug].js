@@ -60,7 +60,7 @@ const ProductDetails = ({ product, products }) => {
 	return (
 		<Container fluid className="bg-light">
 			<Row className=" py-5  justify-content-center align-items-center text-dark">
-				<Col md={6} className="text-center">
+				<Col md={6} className="text-center py-5">
 					<img
 						src={urlFor(image && image[index])}
 						width={300}

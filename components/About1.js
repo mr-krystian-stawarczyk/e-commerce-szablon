@@ -126,7 +126,7 @@ function About1() {
 		<motion.div ref={ref} animate={controls}>
 			<Container
 				fluid
-				className={`d-flex pt-5 align-items-center justify-content-center ${
+				className={`d-flex py-5 align-items-center justify-content-center ${
 					isMobile ? "min-vh-100" : "vh-100"
 				}`}
 				style={{

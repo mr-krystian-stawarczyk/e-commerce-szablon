@@ -73,6 +73,7 @@ const NavbarComp = ({ toggleTheme }) => {
 			fixed="top"
 			style={{
 				height: "70px",
+				width: "100vw",
 				backgroundColor: navbarColor,
 				transition: "background-color 0.5s ease",
 			}}
@@ -101,7 +102,7 @@ const NavbarComp = ({ toggleTheme }) => {
 				></Navbar.Toggle>
 				<Navbar.Collapse
 					id="basic-navbar-nav"
-					className=" rounded justify-content-end text-center  m-1  navbar-toggler border-0"
+					className=" rounded justify-content-end text-center  m-1  navbar-toggler border-0 "
 				>
 					<Nav className="navbar-collapse justify-content-end text-center rounded ">
 						<Nav.Link as={Link} href="/about" className="m-1">
