@@ -41,6 +41,7 @@
 		"react-icons": "^5.4.0",
 		"react-particles": "^2.12.2",
 		"react-slick": "^0.30.3",
+		"react-vertical-timeline-component": "^3.5.3",
 		"sanity": "^3.70.0",
 		"slick-carousel": "^1.8.1",
 		"split-text-js": "^1.0.3",
